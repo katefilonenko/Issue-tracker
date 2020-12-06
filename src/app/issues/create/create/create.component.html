@@ -1,0 +1,90 @@
+<mat-toolbar>
+    <span>Add Issue</span>
+    <span class="fill-remaining-space"></span>
+    <button mat-stroked-button  (click)="onClose()">
+        <mat-icon>clear</mat-icon>
+    </button>
+</mat-toolbar>
+<form class="normal-form">
+    <mat-grid-list cols="2" rowHeight="300px">
+        <mat-grid-tile>
+            <div class="controlles-container">
+                <input type="hidden">
+                <mat-form-field>
+                    <!-- <input matInput name="name" #pearsonName placeholder="Name" [(ngModel)]="pearson.name" #name="ngModel" required> -->
+                    <input matInput name="name" #pearsonName placeholder="Name" required>
+                    <mat-error>Required field.</mat-error>
+                </mat-form-field><br>
+                <mat-form-field>
+                    <!-- <input matInput name="username" #pearsonUsername type="text" pattern="[A-Za-z]{6,}" placeholder="Userame" [(ngModel)]="pearson.username" #username="ngModel" required username> -->
+                    <input matInput name="username" #pearsonUsername type="text" pattern="[A-Za-z]{6,}" placeholder="Userame" required username>
+                    <mat-error>At least six english letters.</mat-error>
+                </mat-form-field><br>
+                <mat-form-field>
+                    <!-- <input matInput name="email" #pearsonEmail placeholder="Email" [(ngModel)]="pearson.email" #email="ngModel" required email> -->
+                    <input matInput name="email" #pearsonEmail placeholder="Email" required email>
+                    <mat-error>Invalid email address.</mat-error>
+                </mat-form-field><br>
+                <mat-form-field>
+                    <!-- <input matInput name="location" #pearsonLocation placeholder="Location" [(ngModel)]="pearson.location" #location="ngModel" required location> -->
+                    <input matInput name="location" #pearsonLocation placeholder="Location" required location>
+                    <mat-error>Required field.</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <!-- <input matInput name="hireDate" #pearsonHireDate [matDatepicker]="picker" placeholder="Hire Date" [(ngModel)]="pearson.hireDate" #hireDate="ngModel" required hireDate> -->
+                    <input matInput name="hireDate" #pearsonHireDate [matDatepicker]="picker" placeholder="Hire Date" required hireDate>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error>Required field.</mat-error>
+                </mat-form-field>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <div class="controlles-container">
+                <mat-form-field>
+                    <!-- <mat-select name="severity" #pearsonSeverity placeholder="Severity" [(ngModel)]="pearson.severity" #severity="ngModel" required severity> -->
+                        <mat-select name="severity" #pearsonSeverity placeholder="Severity" required severity>
+                        <mat-option>None</mat-option>
+                        <ng-container *ngFor="let severity of severity1">
+                            <mat-option value="{{severity.value}}">{{severity.value}}</mat-option>
+                        </ng-container>
+                    </mat-select>
+                    <mat-error>Required field.</mat-error>
+                </mat-form-field><br>
+                <mat-form-field>
+                    <!-- <mat-select name="status" #pearsonStatus placeholder="Status" [(ngModel)]="pearson.status" #status="ngModel" required status> -->
+                        <mat-select name="status" #pearsonStatus placeholder="Status" required status>
+                        <mat-option>None</mat-option>
+                        <ng-container *ngFor="let status of status1">
+                            <mat-option value="{{status.value}}">{{status.value}}</mat-option>
+                        </ng-container>
+                    </mat-select>
+                    <mat-error>Required field.</mat-error>
+                </mat-form-field><br>
+                <mat-form-field>
+                    <!-- <input matInput name="description" #pearsonDescription placeholder="Description" [(ngModel)]="pearson.description" #description="ngModel" required description> -->
+                    <input matInput name="description" #pearsonDescription placeholder="Description" required description>
+                    <mat-error>Required field.</mat-error>
+                </mat-form-field><br>
+                <mat-form-field>
+                    <!-- <input matInput name="comment" #pearsonComment placeholder="Comment" [(ngModel)]="pearson.comment" #comment="ngModel"> -->
+                    <input matInput name="comment" #pearsonComment placeholder="Comment" >
+                </mat-form-field>
+
+                <div class="button-row">
+                    <!-- <button mat-raised-button color="primary" type="submit" 
+                        [disabled]="name.invalid || username.invalid || email.invalid || location.invalid 
+                        || hireDate.invalid || severity.invalid || status.invalid || description.invalid" 
+                        (click)="addPearson(pearsonName.value, pearsonUsername.value, pearsonEmail.value, pearsonLocation.value, pearsonHireDate.value, pearsonSeverity.value, pearsonStatus.value, pearsonDescription.value, pearsonComment.value)">
+                        Submit 
+                    </button> -->
+                    <button mat-raised-button color="primary" type="submit" 
+                    (click)="addPearson(pearsonName.value, pearsonUsername.value, pearsonEmail.value, pearsonLocation.value, pearsonHireDate.value, pearsonSeverity.value, pearsonStatus.value, pearsonDescription.value, pearsonComment.value)">
+                    Submit 
+                </button>
+                    <!-- <button mat-raised-button color="warn" (click)="onClear()">Clear</button> -->
+                </div>
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list>
+</form>

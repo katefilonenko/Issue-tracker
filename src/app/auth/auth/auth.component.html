@@ -1,0 +1,71 @@
+<div class="center-content">
+    <mat-card class="example-card">
+      <mat-card-header>
+        <mat-card-title>Welcome</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-tab-group>
+
+          <mat-tab label="Log In">
+
+            <mat-form-field class="example-full-width">
+              <mat-label>Username</mat-label>
+              <input matInput type="text" name="username" placeholder="Username" pattern="[A-Za-z]{6,}" 
+              [(ngModel)]="pearson.username" #name="ngModel" required>
+              <mat-icon matSuffix>account_circle</mat-icon>
+              <mat-error>At least six english letters.</mat-error>
+            </mat-form-field>
+  
+            <mat-form-field class="example-full-width">
+              <mat-label>Password</mat-label>
+              <input matInput type="password" name="password" placeholder="Password" [(ngModel)]="pearson.password"
+              pattern="[0-9]{10}" #password="ngModel" required password>
+              <mat-icon matSuffix>vpn_key</mat-icon>
+            </mat-form-field>
+            <button mat-button color="primary" [disabled]="username.invalid || password.invalid" (click)="login()" routerLink="/home">Login</button>
+            <!-- <a type="button" routerLink="/recovery" style="float: left; margin-top: 30px;">Forgot password</a> -->
+          </mat-tab>
+
+          <mat-tab label="Sign Up">
+
+            <mat-form-field class="example-full-width">
+              <mat-label>Name</mat-label>
+              <input matInput type="text" placeholder="John"
+              name="name" [(ngModel)]="pearson.name" #name="ngModel" required>
+              <mat-error>This field is required.</mat-error>
+              <!-- <mat-icon matSuffix>email</mat-icon> -->
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Username</mat-label>
+                <input matInput type="text" placeholder="handsome" pattern="[A-Za-z]{6,}"
+                name="username" [(ngModel)]="pearson.username" #username="ngModel" required>
+                <mat-error>At least six english letters.</mat-error>
+                <!-- <mat-icon matSuffix>email</mat-icon> -->
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" placeholder="pat@example.com"
+                name="email" [(ngModel)]="pearson.email" #email="ngModel" required>
+                <mat-error>Invalid email address.</mat-error>
+                <!-- <mat-icon matSuffix>email</mat-icon> -->
+            </mat-form-field>
+  
+            <mat-form-field class="example-full-width">
+              <mat-label>Password</mat-label>
+              <input matInput type="password" name="password" placeholder="Create password"
+              name="password" [(ngModel)]="pearson.password"pattern="[0-9]{10}" #password="ngModel" required>
+              <!-- <mat-icon matSuffix>vpn_key</mat-icon> -->
+            </mat-form-field>
+
+            <button mat-button color="primary" 
+            [disabled]="name.invalid || username.invalid || email.invalid || password.invalid" 
+            (click)="register()" routerLink="/home">Register</button>
+            <!-- <button mat-button color="primary" (click)="getPe()">click</button> -->
+          </mat-tab>
+        </mat-tab-group>
+      </mat-card-content>
+  
+    </mat-card>
+  </div>

@@ -1,0 +1,17 @@
+<mat-toolbar>
+    <span>Comments for issue</span>
+    <span class="fill-remaining-space"></span>
+    <button mat-stroked-button  (click)="onClose()">
+        <mat-icon>clear</mat-icon>
+    </button>
+</mat-toolbar>
+<div *ngIf="pearson"> 
+    <mat-form-field style="margin-top: 20px;">
+        <input matInput name="comment" placeholder="Leave a coment" [(ngModel)]="pearson.comment" #comment="ngModel">
+    </mat-form-field>
+</div>
+
+<button mat-button color="primary" type="submit" (click)="saveComment()">
+    Submit 
+</button>
+

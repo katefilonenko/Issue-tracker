@@ -1,0 +1,180 @@
+<mat-list>
+  <h3 *ngIf="default" style="text-align: center">There is nothing to show. Please raise issue by clicking "Add New"
+    button.
+  </h3>
+
+
+  <!-- <button mat-flat-button (click)="countOfUsers()" style=" margin-top: 20px; margin-left: 20px;">Users</button>
+  <button mat-flat-button (click)="daysInMonth(month, year)" style=" margin-top: 20px; margin-left: 20px">Days</button> -->
+  <!-- <button mat-flat-button (click)="usersLastMonth()" style=" margin-top: 20px; margin-left: 20px;">Users every day</button> -->
+
+  <!-- <div>
+    <div style=" margin-top: 20px;">
+      <button mat-flat-button (click)="filtertoggle()" disabled>Filter</button>
+    </div>
+    <div *ngIf="filterClicked">
+      <form #filterForm="ngForm">
+        <h6>Severity Filter</h6>
+        <div>
+          <div>
+            <input type="radio" id="sevfilter1" name="sevfilter" value="Minor" [(ngModel)]="sevfilter">
+            <label for="sevfilter1">Minor</label>
+          </div>
+          <div>
+            <input type="radio" id="sevfilter2" name="sevfilter" value="Major" [(ngModel)]="sevfilter">
+            <label for="sevfilter2">Major</label>
+          </div>
+          <div>
+            <input type="radio" id="sevfilter3" name="sevfilter" value="Critical" [(ngModel)]="sevfilter">
+            <label for="sevfilter3">Critical</label>
+          </div>
+        </div>
+        <h6>Status Filter</h6>
+        <div>
+          <div>
+            <input type="radio" id="stafilter1" name="stafilter" value="Open" [(ngModel)]="stafilter">
+            <label for="stafilter1">Open</label>
+          </div>
+          <div>
+            <input type="radio" id="stafilter2" name="stafilter" value="In Progress" [(ngModel)]="stafilter">
+            <label for="stafilter2">In Progress</label>
+          </div>
+          <div>
+            <input type="radio" id="stafilter3" name="stafilter" value="Resolved" [(ngModel)]="stafilter">
+            <label for="stafilter3">Resolved</label>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div> -->
+
+  <p align="center" style="margin-top: 20px;"><font size="50" color="#4C283D" face="bookman old style" >Basic information</font></p>
+
+  <div class="search-div">
+
+    <button mat-flat-button (click)="onCreate()" style=" margin-top: 20px;">
+      <mat-icon>add</mat-icon>Create
+    </button>
+
+
+    <button mat-flat-button (click)="customtoggle()" style="margin-left: 20px;">
+      <mat-icon>settings</mat-icon>Customise
+    </button>
+    <div *ngIf="customClicked">
+      <h5>Select the fields you want to remove</h5>
+      <form [formGroup]="form">
+        <ul>
+          <li *ngFor="let cd of columnDefinitions">
+            <mat-checkbox [formControlName]="cd.def">
+              {{cd.label}}
+            </mat-checkbox>
+          </li>
+        </ul>
+
+      </form>
+    </div>
+
+
+
+    <mat-form-field style=" margin-top: 20px;">
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search" #input>
+    </mat-form-field>
+  </div>
+
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+      <td mat-cell *matCellDef="let pearson"> {{pearson.name}} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="username">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Username </th>
+      <td mat-cell *matCellDef="let pearson"> {{pearson.username}} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+      <td mat-cell *matCellDef="let pearson"> {{pearson.email}} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="location">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Location </th>
+      <td mat-cell *matCellDef="let pearson"> {{pearson.location}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="hireDate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Created Date </th>
+      <td mat-cell *matCellDef="let pearson"> {{pearson.hireDate}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="severity">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Severity </th>
+      <td mat-cell *matCellDef="let pearson"> {{pearson.severity}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+      <td mat-cell *matCellDef="let pearson"> {{pearson.status}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+      <td mat-cell *matCellDef="let pearson"> {{pearson.description}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="comment">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Comments </th>
+      <td mat-cell *matCellDef="let pearson">
+        <input matInput type="text" value="{{pearson.comment}}" (focusout)="onFocusOutEvent($event)">
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let pearson">
+        <!-- <button mat-icon-button color="primary" (click)="comment(pearson)"><mat-icon>comment</mat-icon></button>   -->
+        <button mat-icon-button color="primary" (click)="onEdit(pearson)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="delete(pearson)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="getDisplayedColumns()"></tr>
+    <tr mat-row *matRowDef="let row; columns: getDisplayedColumns();"></tr>
+
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+    </tr>
+
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+
+
+  <mat-divider></mat-divider>
+  <!-- <button mat-flat-button (click)="statistics()" (click)="statisticstoggle()"  style="margin-left: 20px; margin-top: 20px;">Show Statistics</button>
+  <div *ngIf="statisticsClicked">
+    <p align="center" style="margin-top: 60px;"><font size="50" color="#4C283D" face="bookman old style" >Statistics for issues</font></p>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <div [chart]="chart" style="margin-top: 40px;"></div>
+    <div [chart]="chart1" style="margin-top: 40px;"></div>
+  </div> -->
+
+  <div>
+    <p align="center" style="margin-top: 60px;"><font size="50" color="#4C283D" face="bookman old style" >Statistics for issues</font></p>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <div [chart]="chart" style="margin-top: 40px;"></div>
+    <div [chart]="chart1" style="margin-top: 40px;"></div>
+  </div>
+
+</mat-list>
