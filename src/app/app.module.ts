@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,8 +18,16 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { CreateComponent } from './issues/create/create/create.component';
 import { CommentsComponent } from './issues/comments/comments.component';
 import { ChartModule } from 'angular-highcharts';
-import { EditComponent } from './issues/edit/edit.component';;
-
+import { EditComponent } from './issues/edit/edit.component';
+import { StatComponent } from './stat/stat.component';
+import { MatConfDialogComponent } from './mat-conf-dialog/mat-conf-dialog.component';;
+import { InterceptorService } from './loader/interceptor.service';
+import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './auth.guard';
+import { AuthService } from './services/auth.service';
+import { TokenInterceptorService } from './token-interceptor.service';
+import { CreateOptionComponent } from './issues/create/create-option/create-option.component'
 
 @NgModule({
   declarations: [
@@ -28,22 +37,34 @@ import { EditComponent } from './issues/edit/edit.component';;
     HomeComponent,
     CreateComponent,
     CommentsComponent,
-    EditComponent
+    EditComponent,
+    StatComponent,
+    MatConfDialogComponent,
+    RegisterComponent,
+    LoginComponent,
+    CreateOptionComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
     ToastrModule.forRoot(),
     HttpClientModule,
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, { dataEncapsulation: false }
-    ),
+    // HttpClientInMemoryWebApiModule.forRoot(
+    //   InMemoryDataService, { dataEncapsulation: false }
+    // ),
     MatGridListModule,
     ChartModule,
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true},
+    AuthGuard, AuthService,
+    {
+      provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

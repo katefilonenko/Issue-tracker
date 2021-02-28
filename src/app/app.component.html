@@ -1,8 +1,20 @@
 <mat-toolbar>
   <span>Issue tracker</span>
-  <a class="nav-link" routerLink="/home" style="cursor: pointer; margin-left: 20px;">Home</a>
-  <a class="nav-link" routerLink="/issues" style="cursor: pointer; margin-left: 20px;">Issues</a>
+  <button mat-button color="primary" class="nav-link" routerLink="/home" style="cursor: pointer; margin-left: 20px;"
+  *ngIf="authService.loggedIn()">Home</button>
+  <button mat-button color="primary" class="nav-link" routerLink="/issues" style="cursor: pointer; margin-left: 20px;"
+  *ngIf="authService.loggedIn()">Issues
+  </button>
+  <button mat-button color="primary" class="nav-link" routerLink="/statistics" style="cursor: pointer; margin-left: 20px;"
+    *ngIf="authService.loggedIn()">Statistics
+  </button>
   <span class="example-spacer"></span>
+  <button mat-button color="primary" class="nav-link" routerLink="/login" *ngIf="!authService.loggedIn()"
+  style="cursor: pointer;" routerLinkActive="active">Login</button>
+  <button mat-button color="primary" class="nav-link" routerLink="/register" *ngIf="!authService.loggedIn()"
+  style="cursor: pointer;" routerLinkActive="active">Register</button>
+  <button mat-button color="primary" class="nav-link" routerLink="/login" style="cursor: pointer;" *ngIf="authService.loggedIn()"
+    (click)="authService.logoutUser()">Logout</button>
   <!-- <a class="nav-link" routerLink="/login" *ngIf="!_auth.loggedIn()" routerLinkActive="active">Log In</a> -->
   <!-- <a class="nav-link" routerLink="/register" *ngIf="!_auth.loggedIn()" routerLinkActive="active">Sign Up</a> -->
   <!-- <a class="nav-link" style="cursor: pointer; margin-left: 20px;" >Account</a>

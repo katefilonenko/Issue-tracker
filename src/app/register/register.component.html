@@ -1,0 +1,51 @@
+<div class="center-content">
+  <mat-card class="example-card">
+    <mat-card-header>
+      <!-- <div mat-card-avatar class="example-header-image"></div> -->
+      <mat-card-title>Register</mat-card-title>
+      <!-- <mat-card-subtitle>Dog Breed</mat-card-subtitle> -->
+    </mat-card-header>
+    <mat-card-content>
+
+      <form class="form">
+
+        <mat-form-field class="example-full-width">
+          <!-- <mat-label>Email</mat-label> -->
+          <input matInput type="text" [(ngModel)]="registerUserData.name" name="name" placeholder="John" #name="ngModel"
+            required>
+          <mat-error>This field is required.</mat-error>
+          <!-- <mat-icon matSuffix>account_circle</mat-icon> -->
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <!-- <mat-label>Username</mat-label> -->
+          <input matInput type="text" placeholder="handsome" pattern="[A-Za-z]{6,}" name="username"
+            [(ngModel)]="registerUserData.username" #username="ngModel" required>
+          <mat-error>At least six english letters.</mat-error>
+          <!-- <mat-icon matSuffix>email</mat-icon> -->
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <!-- <mat-label>Email</mat-label> -->
+          <input matInput type="email" [(ngModel)]="registerUserData.email" name="email" placeholder="Email"
+            #email="ngModel" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>
+          <mat-error>Invalid email address.</mat-error>
+          <!-- <mat-icon matSuffix>account_circle</mat-icon> -->
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <!-- <mat-label>Password</mat-label> -->
+          <input matInput type="password" [(ngModel)]="registerUserData.password" name="password" placeholder="Password"
+            pattern="[0-9]{10}" #password="ngModel" required password>
+          <mat-error>Password must contain 10 numbers.</mat-error>
+          <!-- <mat-icon matSuffix>vpn_key</mat-icon> -->
+        </mat-form-field>
+      </form>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button color="primary" type="button"
+        [disabled]="name.invalid || username.invalid || email.invalid || password.invalid"
+        (click)="registerUser()">Register</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

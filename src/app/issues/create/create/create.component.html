@@ -1,90 +1,150 @@
-<mat-toolbar>
+<mat-toolbar style="margin: auto; width: 100%; background-color: white">
     <span>Add Issue</span>
-    <span class="fill-remaining-space"></span>
-    <button mat-stroked-button  (click)="onClose()">
+    <!-- <span class="fill-remaining-space"></span> -->
+    <button mat-icon-button color="warn" (click)="onClose()">
         <mat-icon>clear</mat-icon>
     </button>
 </mat-toolbar>
-<form class="normal-form">
-    <mat-grid-list cols="2" rowHeight="300px">
+
+<form class="normal-form" >
+    <mat-grid-list cols="2" rowHeight="400px">
         <mat-grid-tile>
             <div class="controlles-container">
-                <input type="hidden">
+                
                 <mat-form-field>
-                    <!-- <input matInput name="name" #pearsonName placeholder="Name" [(ngModel)]="pearson.name" #name="ngModel" required> -->
-                    <input matInput name="name" #pearsonName placeholder="Name" required>
+                    <mat-select name="name" [(ngModel)]="searchName" (ngModelChange)="onChangeName($event)"
+                     #pearsonName placeholder="Name" 
+                        required>
+                        <!-- <mat-option>None</mat-option> -->
+                        <ng-container *ngIf="!second && !third">
+                            <mat-option  *ngFor="let name of names" value="{{name}}" >{{name}}</mat-option>
+                        </ng-container>
+                        <mat-option *ngIf="second || third" value="{{name1}}">{{name1}}</mat-option>
+                    </mat-select>
                     <mat-error>Required field.</mat-error>
                 </mat-form-field><br>
+
                 <mat-form-field>
-                    <!-- <input matInput name="username" #pearsonUsername type="text" pattern="[A-Za-z]{6,}" placeholder="Userame" [(ngModel)]="pearson.username" #username="ngModel" required username> -->
-                    <input matInput name="username" #pearsonUsername type="text" pattern="[A-Za-z]{6,}" placeholder="Userame" required username>
-                    <mat-error>At least six english letters.</mat-error>
+                    <mat-select name="username" #pearsonUsername placeholder="Userame" (ngModelChange)="onChangeUsername($event)"
+                    [(ngModel)]="searchUsername" required>
+                        <ng-container *ngIf="!first && !third">
+                            <mat-option  *ngFor="let username of usernames" value="{{username}}">{{username}}</mat-option>
+                        </ng-container>
+                        <mat-option *ngIf="first || third" value="{{username1}}">{{username1}}</mat-option>
+                    </mat-select>    
+                    <mat-error>Required field.</mat-error>
                 </mat-form-field><br>
+
                 <mat-form-field>
-                    <!-- <input matInput name="email" #pearsonEmail placeholder="Email" [(ngModel)]="pearson.email" #email="ngModel" required email> -->
-                    <input matInput name="email" #pearsonEmail placeholder="Email" required email>
+                    <mat-select name="email" #pearsonEmail placeholder="Email" (ngModelChange)="onChangeEmail($event)"
+                    [(ngModel)]="searchEmail" required>
+                            <ng-container *ngIf="!first && !second">
+                                <!-- <mat-option>None</mat-option> -->
+                                <mat-option  *ngFor="let email of emails" value="{{email}}">{{email}}</mat-option>
+                            </ng-container>
+                            <mat-option *ngIf="first || second" value="{{email1}}">{{email1}}</mat-option>
+                    </mat-select>       
                     <mat-error>Invalid email address.</mat-error>
                 </mat-form-field><br>
+
                 <mat-form-field>
-                    <!-- <input matInput name="location" #pearsonLocation placeholder="Location" [(ngModel)]="pearson.location" #location="ngModel" required location> -->
-                    <input matInput name="location" #pearsonLocation placeholder="Location" required location>
+                    <mat-select matInput name="location" #pearsonLocation  #regimeWidget placeholder="Location"
+                    [(ngModel)]="searchLocation" required location (click)="getLocations()">
+                        
+                            <!-- <mat-option>None</mat-option> -->
+                            <mat-option (click)="onCreate()">Add New</mat-option>
+                            
+                            <mat-option *ngFor="let location of locations" value="{{location.locname}}">{{location.locname}}</mat-option>
+                            <!-- <ng-container *ngIf="location.value == 'Other'">
+                                <input matInput>
+                                <span>You selected "Other"</span>
+                            </ng-container> -->
+                        
+                        <!-- <mat-option>Other</mat-option> -->
+                    </mat-select>
                     <mat-error>Required field.</mat-error>
-                </mat-form-field>
+                </mat-form-field><br>
+
+                <!-- <div *ngIf="regimeWidget.value == 1 " >
+                    <mat-form-field>
+                        <ng-container >
+                            <input matInput name="locname" #locname formControlName="locname" placeholder="New Option" required>
+                        </ng-container>
+                        <mat-error>Field can't be empty.</mat-error>
+                    </mat-form-field> 
+                    <button mat-icon-button (click)="addLocation(locname.value)" [disabled]="locname.invalid">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div> -->
+                                    
                 <mat-form-field>
-                    <!-- <input matInput name="hireDate" #pearsonHireDate [matDatepicker]="picker" placeholder="Hire Date" [(ngModel)]="pearson.hireDate" #hireDate="ngModel" required hireDate> -->
-                    <input matInput name="hireDate" #pearsonHireDate [matDatepicker]="picker" placeholder="Hire Date" required hireDate>
+                    <input matInput name="hireDate" #pearsonHireDate [min]="minDate" [matDatepicker]="picker"
+                    [(ngModel)]="searchHireDate" placeholder="Date" required hireDate>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                     <mat-error>Required field.</mat-error>
                 </mat-form-field>
+
             </div>
+
         </mat-grid-tile>
+
         <mat-grid-tile>
+
             <div class="controlles-container">
+
                 <mat-form-field>
-                    <!-- <mat-select name="severity" #pearsonSeverity placeholder="Severity" [(ngModel)]="pearson.severity" #severity="ngModel" required severity> -->
-                        <mat-select name="severity" #pearsonSeverity placeholder="Severity" required severity>
-                        <mat-option>None</mat-option>
+                    <mat-select name="severity" #pearsonSeverity placeholder="Severity" 
+                    [(ngModel)]="searchSeverity" required severity>
+                        <!-- <mat-option>None</mat-option> -->
                         <ng-container *ngFor="let severity of severity1">
                             <mat-option value="{{severity.value}}">{{severity.value}}</mat-option>
                         </ng-container>
                     </mat-select>
                     <mat-error>Required field.</mat-error>
                 </mat-form-field><br>
+
                 <mat-form-field>
-                    <!-- <mat-select name="status" #pearsonStatus placeholder="Status" [(ngModel)]="pearson.status" #status="ngModel" required status> -->
-                        <mat-select name="status" #pearsonStatus placeholder="Status" required status>
-                        <mat-option>None</mat-option>
+                    <mat-select name="status" #pearsonStatus placeholder="Status"  required
+                    [(ngModel)]="searchSatus" status>
+                        <!-- <mat-option>None</mat-option> -->
                         <ng-container *ngFor="let status of status1">
                             <mat-option value="{{status.value}}">{{status.value}}</mat-option>
                         </ng-container>
                     </mat-select>
                     <mat-error>Required field.</mat-error>
                 </mat-form-field><br>
+
                 <mat-form-field>
-                    <!-- <input matInput name="description" #pearsonDescription placeholder="Description" [(ngModel)]="pearson.description" #description="ngModel" required description> -->
-                    <input matInput name="description" #pearsonDescription placeholder="Description" required description>
+                    <input matInput name="description" #pearsonDescription placeholder="Description"
+                    [(ngModel)]="searchDescription" required description>
                     <mat-error>Required field.</mat-error>
                 </mat-form-field><br>
+
                 <mat-form-field>
-                    <!-- <input matInput name="comment" #pearsonComment placeholder="Comment" [(ngModel)]="pearson.comment" #comment="ngModel"> -->
-                    <input matInput name="comment" #pearsonComment placeholder="Comment" >
+                    <input matInput name="comment" #pearsonCommentee placeholder="Comment">
                 </mat-form-field>
 
                 <div class="button-row">
-                    <!-- <button mat-raised-button color="primary" type="submit" 
-                        [disabled]="name.invalid || username.invalid || email.invalid || location.invalid 
-                        || hireDate.invalid || severity.invalid || status.invalid || description.invalid" 
-                        (click)="addPearson(pearsonName.value, pearsonUsername.value, pearsonEmail.value, pearsonLocation.value, pearsonHireDate.value, pearsonSeverity.value, pearsonStatus.value, pearsonDescription.value, pearsonComment.value)">
-                        Submit 
-                    </button> -->
-                    <button mat-raised-button color="primary" type="submit" 
-                    (click)="addPearson(pearsonName.value, pearsonUsername.value, pearsonEmail.value, pearsonLocation.value, pearsonHireDate.value, pearsonSeverity.value, pearsonStatus.value, pearsonDescription.value, pearsonComment.value)">
-                    Submit 
-                </button>
-                    <!-- <button mat-raised-button color="warn" (click)="onClear()">Clear</button> -->
+                    <button mat-raised-button color="primary" [disabled]="!searchUsername || !searchEmail || !searchLocation
+                    || !searchHireDate || !searchSeverity || !searchSatus || !searchDescription" 
+                    type="submit" (click)="addPearson(
+                        pearsonName.value, 
+                        pearsonUsername.value, 
+                        pearsonEmail.value, 
+                        pearsonLocation.value, 
+                        pearsonHireDate.value, 
+                        pearsonSeverity.value, 
+                        pearsonStatus.value, 
+                        pearsonDescription.value, 
+                        pearsonCommentee.value)">
+                        Submit
+                    </button>
                 </div>
+
             </div>
         </mat-grid-tile>
+
     </mat-grid-list>
+
 </form>

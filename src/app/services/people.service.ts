@@ -48,5 +48,4 @@ export class PeopleService {
   //   return this.http.put<People>(url, this.httpOptions);
   // }
 
-
 }

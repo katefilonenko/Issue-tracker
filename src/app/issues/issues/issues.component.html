@@ -1,9 +1,3 @@
-<mat-list>
-  <h3 *ngIf="default" style="text-align: center">There is nothing to show. Please raise issue by clicking "Add New"
-    button.
-  </h3>
-
-
   <!-- <button mat-flat-button (click)="countOfUsers()" style=" margin-top: 20px; margin-left: 20px;">Users</button>
   <button mat-flat-button (click)="daysInMonth(month, year)" style=" margin-top: 20px; margin-left: 20px">Days</button> -->
   <!-- <button mat-flat-button (click)="usersLastMonth()" style=" margin-top: 20px; margin-left: 20px;">Users every day</button> -->
@@ -48,11 +42,15 @@
     </div>
   </div> -->
 
+  <!-- <div *ngIf="loaderService.isLoading | async" class="loader-container">
+    <mat-progress-spinner mode="indeterminate" style="top: 50%; left: 50%;"></mat-progress-spinner>
+  </div> -->
+
   <p align="center" style="margin-top: 20px;"><font size="50" color="#4C283D" face="bookman old style" >Basic information</font></p>
 
   <div class="search-div">
 
-    <button mat-flat-button (click)="onCreate()" style=" margin-top: 20px;">
+    <button mat-flat-button (click)="onCreate()" style=" margin-top: 20px; margin-left: 35px;">
       <mat-icon>add</mat-icon>Create
     </button>
 
@@ -60,9 +58,12 @@
     <button mat-flat-button (click)="customtoggle()" style="margin-left: 20px;">
       <mat-icon>settings</mat-icon>Customise
     </button>
-    <div *ngIf="customClicked">
-      <h5>Select the fields you want to remove</h5>
-      <form [formGroup]="form">
+    <mat-form-field style=" margin-top: 20px; margin-left: 20px;" [style.width.px]=327>
+      <input matInput class="search" (keyup)="applyFilter($event.target.value)" placeholder="Search" #input>
+    </mat-form-field>
+    <div *ngIf="customClicked" style="margin-left: 40px; margin-top: 10px;">
+      <h5>Uncheck the fields you want to remove</h5>
+      <!-- <form [formGroup]="form">
         <ul>
           <li *ngFor="let cd of columnDefinitions">
             <mat-checkbox [formControlName]="cd.def">
@@ -71,15 +72,25 @@
           </li>
         </ul>
 
+      </form> -->
+      <form [formGroup]="form">
+        <ul>
+          <!-- <li><mat-checkbox formControlName="name">Name</mat-checkbox></li> -->
+          <li><mat-checkbox formControlName="username">Userame</mat-checkbox></li>
+          <li><mat-checkbox formControlName="email">Email</mat-checkbox></li>
+          <li><mat-checkbox formControlName="location">Location</mat-checkbox></li>
+          <li><mat-checkbox formControlName="hireDate">Date</mat-checkbox></li>
+          <li><mat-checkbox formControlName="severity">Severity</mat-checkbox></li>
+          <li><mat-checkbox formControlName="status">Status</mat-checkbox></li>
+          <li><mat-checkbox formControlName="description">Description</mat-checkbox></li>
+          <li><mat-checkbox formControlName="comment">Comment</mat-checkbox></li>
+        </ul>
+
       </form>
     </div>
 
 
-
-    <mat-form-field style=" margin-top: 20px;">
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search" #input>
-    </mat-form-field>
-  </div>
+  </div><br>
 
 
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
@@ -109,7 +120,7 @@
 
     <ng-container matColumnDef="hireDate">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Created Date </th>
-      <td mat-cell *matCellDef="let pearson"> {{pearson.hireDate}} </td>
+      <td mat-cell *matCellDef="let pearson"> {{pearson.hireDate | date : 'M/d/yy'}} </td>
     </ng-container>
 
     <ng-container matColumnDef="severity">
@@ -134,11 +145,16 @@
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="actions">
+    <ng-container matColumnDef="actions" style="width: 10px;">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let pearson">
         <!-- <button mat-icon-button color="primary" (click)="comment(pearson)"><mat-icon>comment</mat-icon></button>   -->
-        <button mat-icon-button color="primary" (click)="onEdit(pearson)">
+        <!-- <div *ngIf="pearson.status != 'Done'">
+          <button mat-icon-button color="primary" (click)="onEdit(pearson)">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div> -->
+        <button mat-icon-button color="primary" (click)="onEdit(pearson)" [disabled]="pearson.status == 'Done'">
           <mat-icon>edit</mat-icon>
         </button>
         <button mat-icon-button color="warn" (click)="delete(pearson)">
@@ -149,10 +165,13 @@
 
 
     <tr mat-header-row *matHeaderRowDef="getDisplayedColumns()"></tr>
-    <tr mat-row *matRowDef="let row; columns: getDisplayedColumns();"></tr>
+    <tr mat-row *matRowDef="let row; columns: getDisplayedColumns();" 
+    [ngClass]="{'make-done': row.status == 'Done', 
+        'make-inpr': row.status == 'In progress',
+        'make-notst': row.status == 'Not started'}"></tr>
 
     <tr class="mat-row" *matNoDataRow>
-      <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+      <td class="mat-cell" colspan="4">No data matching "{{input.value}}"</td>
     </tr>
 
   </table>
@@ -170,11 +189,9 @@
     <div [chart]="chart1" style="margin-top: 40px;"></div>
   </div> -->
 
-  <div>
+  <!-- <div>
     <p align="center" style="margin-top: 60px;"><font size="50" color="#4C283D" face="bookman old style" >Statistics for issues</font></p>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <div [chart]="chart" style="margin-top: 40px;"></div>
     <div [chart]="chart1" style="margin-top: 40px;"></div>
-  </div>
-
-</mat-list>
+  </div> -->

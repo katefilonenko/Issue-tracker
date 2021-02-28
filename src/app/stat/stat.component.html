@@ -1,0 +1,11 @@
+<div *ngIf="loaderService.isLoading | async" class="loader-container">
+  <mat-progress-spinner mode="indeterminate" style="top: 50%; left: 50%;"></mat-progress-spinner>
+</div>
+<div>
+  <p align="center" style="margin-top: 60px;">
+    <font size="50" color="#4C283D" face="bookman old style">Statistics for issues</font>
+  </p>
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <div [chart]="chart" style="margin-top: 40px;"></div>
+  <div [chart]="chart1" style="margin-top: 40px;"></div>
+</div>

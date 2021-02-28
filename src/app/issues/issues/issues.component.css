@@ -12,8 +12,18 @@ button{
   }
 
   table {
-    width: 100%;
+    width: 95%;
+    margin: auto;
 }
+mat-paginator{
+  width: 95%;
+  margin: auto;
+}
+
+mat-form-field {
+  width: 50%;
+}
+
 
 /* .mat-elevation-z9{
   width: 100%;
@@ -25,4 +35,29 @@ td, th {
 .mat-form-field {
   font-size: 14px;
   width: 100%;
+}
+
+mat-icon-button{
+  width: 15px;
+}
+
+.loader-container{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: white;
+  opacity: 0.5;
+  z-index: 99;
+}
+
+.make-done {
+  background-color:#DBFFD4
+}
+
+.make-inpr {
+  background-color:#DFE8FF 
+}
+
+.make-notst {
+  background-color:#FFE7FE
 }

@@ -57,6 +57,8 @@ export class AuthComponent implements OnInit {
     this.authService.signup(this.pearson)
     .subscribe(res => {
       console.log(this.pearson);
+      // localStorage.setItem('token', res.token)
+      // this.router.navigate(['/issues'])
       this.getPe();
       this.showSuccess();
     }, error => this.showError()
@@ -97,6 +99,8 @@ export class AuthComponent implements OnInit {
     this.authService.signup(this.pearson)
     .subscribe(res => {
       console.log(this.pearson);
+      // localStorage.setItem('token', res.token)
+      //   this.router.navigate(['/issues'])
       this.getPe();
       this.showSuccess();
     }, error => this.showError()

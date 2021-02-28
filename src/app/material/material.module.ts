@@ -20,7 +20,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
-
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const MaterialComponents = [
   MatIconModule,
@@ -44,7 +45,9 @@ const MaterialComponents = [
   MatSnackBarModule,
   MatButtonToggleModule,
   MatDividerModule,
-  MatListModule
+  MatListModule,
+  MatDialogModule,
+  MatProgressSpinnerModule
 ]
 
 @NgModule({

@@ -1,45 +1,82 @@
-<mat-toolbar>
+<mat-toolbar style="background-color: white">
     <span>Edit Issue</span>
     <span class="fill-remaining-space"></span>
-    <button mat-stroked-button  (click)="onClose()">
+    <button mat-icon-button color="warn" (click)="onClose()">
         <mat-icon>clear</mat-icon>
     </button>
 </mat-toolbar>
 
-<form class="normal-form">
-    <mat-grid-list cols="2" rowHeight="300px" *ngIf="pearson">
+<form [formGroup]="authService.myForm" class="normal-form">
+    <mat-grid-list cols="2" rowHeight="300px" >
         <mat-grid-tile>
             <div class="controlles-container">
-                <input type="hidden">
+                <!-- <input type="hidden"> -->
                 <mat-form-field>
-                    <input matInput name="name" placeholder="Name" [(ngModel)]="pearson.name" #name="ngModel" required>
+                    <!-- <input matInput name="name" #pearsonName placeholder="Name" formControlName="name" required> -->
+                    <mat-select name="name" #pearsonName placeholder="Name" formControlName="name"
+                        required>
+                        <!-- <mat-option>None</mat-option> -->
+                        <!-- <ng-container *ngFor="let name of names"> -->
+                            <mat-option value="{{pearson.name}}">{{pearson.name}}</mat-option>
+                        <!-- </ng-container> -->
+                    </mat-select>
                     <mat-error>Required field.</mat-error>
                 </mat-form-field><br>
                 <mat-form-field>
-                    <input matInput name="username" type="text" pattern="[A-Za-z]{6,}" placeholder="Userame" [(ngModel)]="pearson.username" #username="ngModel" required username>
-                    <mat-error>At least six english letters.</mat-error>
+                    <!-- <input matInput name="username" #pearsonUsername type="text" pattern="[A-Za-z]{6,}" placeholder="Username" 
+                    formControlName="username" required username> -->
+                    <mat-select name="username" #pearsonUsername placeholder="Userame" formControlName="username"
+                    pattern="[A-Za-z]{6,}" required>
+                        <!-- <mat-option>None</mat-option> -->
+                        <!-- <ng-container *ngFor="let username of usernames"> -->
+                            <mat-option value="{{pearson.username}}">{{pearson.username}}</mat-option>
+                        <!-- </ng-container> -->
+                    </mat-select>   
+                    <mat-error>Required field.</mat-error>
                 </mat-form-field><br>
                 <mat-form-field>
-                    <input matInput name="email" placeholder="Email" [(ngModel)]="pearson.email" #email="ngModel" required email>
+                    <!-- <input matInput name="email" #pearsonEmail placeholder="Email" formControlName="email" required email> -->
+                    <mat-select name="email" #pearsonEmail placeholder="Email" formControlName="email"
+                        required>
+                            <!-- <mat-option>None</mat-option> -->
+                            <!-- <ng-container *ngFor="let email of emails"> -->
+                                <mat-option value="{{pearson.email}}">{{pearson.email}}</mat-option>
+                            <!-- </ng-container> -->
+                    </mat-select>   
                     <mat-error>Invalid email address.</mat-error>
                 </mat-form-field><br>
                 <mat-form-field>
-                    <input matInput name="location" placeholder="Location" [(ngModel)]="pearson.location" #location="ngModel" required location>
+                    <!-- <input matInput name="location" #pearsonLocation placeholder="Location" formControlName="location" required location> -->
+                    <mat-select matInput name="location" #pearsonLocation placeholder="Location"
+                        formControlName="location" required location>
+                        
+                        <ng-container >
+                            <!-- <mat-option>None</mat-option>
+                            <mat-option [value] = 1 (click)="onCreate()">Add New</mat-option> -->
+                            
+                            <mat-option *ngFor="let location of locations" value="{{location.locname}}">{{location.locname}}</mat-option>
+                        </ng-container>
+                    </mat-select>
                     <mat-error>Required field.</mat-error>
                 </mat-form-field><br>
                 <mat-form-field>
-                    <input matInput name="hireDate" [matDatepicker]="picker" placeholder="Hire Date" [(ngModel)]="pearson.hireDate" #hireDate="ngModel" required hireDate>
+                    <input matInput name="hireDate" #pearsonDate placeholder="Date" [min]="minDate" [matDatepicker]="picker" formControlName="hireDate" required hireDate>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                     <mat-error>Required field.</mat-error>
+                    <!-- <input matInput name="hireDate" [matDatepicker]="picker" placeholder="Hire Date"
+                    formControlName="hireDate" required hireDate>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker> -->
+                    <!-- <mat-error>Required field.</mat-error> -->
                 </mat-form-field>
             </div>
         </mat-grid-tile>
         <mat-grid-tile>
             <div class="controlles-container">
                 <mat-form-field>
-                    <mat-select name="severity" placeholder="Severity" [(ngModel)]="pearson.severity" #severity="ngModel" required severity>
-                        <mat-option>None</mat-option>
+                    <mat-select name="severity" #pearsonSeverity placeholder="Severity" formControlName="severity" required severity>
+                        <!-- <mat-option>None</mat-option> -->
                         <ng-container *ngFor="let severity of severity1">
                             <mat-option value="{{severity.value}}">{{severity.value}}</mat-option>
                         </ng-container>
@@ -47,8 +84,8 @@
                     <mat-error>Required field.</mat-error>
                 </mat-form-field><br>
                 <mat-form-field>
-                    <mat-select name="status" placeholder="Status" [(ngModel)]="pearson.status" #status="ngModel" required status>
-                        <mat-option>None</mat-option>
+                    <mat-select name="status" #pearsonStatus placeholder="Status" formControlName="status" required status>
+                        <!-- <mat-option>None</mat-option> -->
                         <ng-container *ngFor="let status of status1">
                             <mat-option value="{{status.value}}">{{status.value}}</mat-option>
                         </ng-container>
@@ -56,12 +93,15 @@
                     <mat-error>Required field.</mat-error>
                 </mat-form-field><br>
                 <mat-form-field>
-                    <input matInput name="description" placeholder="Description" [(ngModel)]="pearson.description" #description="ngModel" required description>
+                    <input matInput name="description" #pearsonDescription placeholder="Description" formControlName="description" required description>
                     <mat-error>Required field.</mat-error>
                 </mat-form-field><br>
                 <mat-form-field>
-                    <input matInput name="comment" placeholder="Comment" [(ngModel)]="pearson.comment" #comment="ngModel">
+                    <input matInput name="comment" #pearsonComment placeholder="Comment" formControlName="comment">
                 </mat-form-field>
+                <!-- <mat-form-field>
+                    <input matInput name="password" placeholder="Password" formControlName="password">
+                </mat-form-field> -->
 
                 <div class="button-row">
                     <!-- <button mat-raised-button color="primary" type="submit" 
@@ -70,8 +110,8 @@
                         (click)="updatePearson()">
                         Submit 
                     </button> -->
-                    <button mat-raised-button color="primary" type="submit"
-                    (click)="updatePearson()">
+                    <button mat-raised-button color="primary" type="submit" [disabled]="authService.myForm.invalid"
+                    (click)="updatePearson(pearsonName.value, pearsonUsername.value, pearsonEmail.value, pearsonLocation.value, pearsonDate.value, pearsonSeverity.value, pearsonStatus.value, pearsonDescription.value, pearsonComment.value)">
                     Submit 
                 </button>
                     <!-- <button mat-raised-button color="warn" (click)="onClear()">Clear</button> -->

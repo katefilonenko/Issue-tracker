@@ -5,7 +5,7 @@ export interface People {
     email: string,
     password: string,
     location: string,
-    hireDate: string, 
+    hireDate: Date, 
     description: string,
     severity: string,
     status: string,

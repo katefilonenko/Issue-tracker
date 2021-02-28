@@ -25,6 +25,8 @@
     "angular-in-memory-web-api": "^0.11.0",
     "chart.js": "^2.9.4",
     "highcharts": "^8.2.2",
+    "moment": "^2.29.1",
+    "mongoose": "^5.11.13",
     "ngx-toastr": "^13.1.0",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
