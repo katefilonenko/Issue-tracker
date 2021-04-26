@@ -7,14 +7,13 @@
 </mat-toolbar>
 
 <form class="normal-form" >
-    <mat-grid-list cols="2" rowHeight="400px">
+    <mat-grid-list cols="2" rowHeight="350px">
         <mat-grid-tile>
             <div class="controlles-container">
                 
                 <mat-form-field>
                     <mat-select name="name" [(ngModel)]="searchName" (ngModelChange)="onChangeName($event)"
-                     #pearsonName placeholder="Name" 
-                        required>
+                     #pearsonName placeholder="Name" required>
                         <!-- <mat-option>None</mat-option> -->
                         <ng-container *ngIf="!second && !third">
                             <mat-option  *ngFor="let name of names" value="{{name}}" >{{name}}</mat-option>
@@ -94,6 +93,17 @@
             <div class="controlles-container">
 
                 <mat-form-field>
+                    <mat-select name="type" #pearsonType placeholder="Type" 
+                    [(ngModel)]="searchType" required type>
+                        <!-- <mat-option>None</mat-option> -->
+                        <ng-container *ngFor="let type of types">
+                            <mat-option value="{{type.value}}">{{type.value}}</mat-option>
+                        </ng-container>
+                    </mat-select>
+                    <mat-error>Required field.</mat-error>
+                </mat-form-field><br>
+
+                <mat-form-field>
                     <mat-select name="severity" #pearsonSeverity placeholder="Severity" 
                     [(ngModel)]="searchSeverity" required severity>
                         <!-- <mat-option>None</mat-option> -->
@@ -125,26 +135,25 @@
                     <input matInput name="comment" #pearsonCommentee placeholder="Comment">
                 </mat-form-field>
 
-                <div class="button-row">
-                    <button mat-raised-button color="primary" [disabled]="!searchUsername || !searchEmail || !searchLocation
-                    || !searchHireDate || !searchSeverity || !searchSatus || !searchDescription" 
-                    type="submit" (click)="addPearson(
-                        pearsonName.value, 
-                        pearsonUsername.value, 
-                        pearsonEmail.value, 
-                        pearsonLocation.value, 
-                        pearsonHireDate.value, 
-                        pearsonSeverity.value, 
-                        pearsonStatus.value, 
-                        pearsonDescription.value, 
-                        pearsonCommentee.value)">
-                        Submit
-                    </button>
-                </div>
-
             </div>
         </mat-grid-tile>
 
     </mat-grid-list>
 
+    <button mat-raised-button color="primary" 
+    [disabled]="!searchUsername || !searchEmail || !searchLocation || !searchHireDate 
+        || !searchType || !searchSeverity || !searchSatus || !searchDescription" type="submit" 
+        (click)="addPearson(
+        pearsonName.value, 
+        pearsonUsername.value, 
+        pearsonEmail.value, 
+        pearsonLocation.value, 
+        pearsonHireDate.value, 
+        pearsonType.value,
+        pearsonSeverity.value, 
+        pearsonStatus.value, 
+        pearsonDescription.value, 
+        pearsonCommentee.value)">
+        Submit
+    </button>
 </form>

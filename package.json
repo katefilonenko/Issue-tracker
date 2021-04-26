@@ -23,6 +23,7 @@
     "@angular/router": "~10.0.14",
     "angular-highcharts": "^10.0.1",
     "angular-in-memory-web-api": "^0.11.0",
+    "cargo": "^0.8.0",
     "chart.js": "^2.9.4",
     "highcharts": "^8.2.2",
     "moment": "^2.29.1",

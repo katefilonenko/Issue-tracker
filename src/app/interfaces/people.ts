@@ -1,12 +1,13 @@
 export interface People {
-    id: number
+    id: number,
     name: string,
     username: string,
     email: string,
     password: string,
     location: string,
-    hireDate: Date, 
+    hireDate: string, 
     description: string,
+    type: string,
     severity: string,
     status: string,
     comment: string 

@@ -20,10 +20,10 @@
       margin-top: 10px;
     width: 100%;
   }
-  .mat-button{
+  .mat-flat-button{
       margin-top: 10px;
     width: 100%;
-    color: white;
+    
     height: 40px;
-    background-color: #3F51B5;
+    
   }

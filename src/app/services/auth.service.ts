@@ -26,6 +26,7 @@ export class AuthService {
   private _registerUrl = 'http://localhost:8080/api/register';
   private _loginUrl = 'http://localhost:8080/api/login';
   private peopleUrl = 'http://localhost:8080/api';
+  private commentUrl = 'http://localhost:8080/comment';
 
   signup(user) {
     // const url = `${this.usersUrl}/${id}`
@@ -76,6 +77,11 @@ export class AuthService {
     return this.http.put(url, data)
   }
 
+  updateComment(id, data){
+    const url = `${this.commentUrl}/${id}`
+    return this.http.put(url, data)
+  }
+
   deletePearson(id){        
     return this.http.delete(`${this.peopleUrl}/${id}`)
   }
@@ -91,6 +97,7 @@ export class AuthService {
     "location": new FormControl("", Validators.required),
     // "hireDate": new FormControl("", Validators.required),
     "hireDate": new FormControl({value : new Date()}, Validators.required),
+    "type": new FormControl("", Validators.required),
     "severity": new FormControl("", Validators.required),
     "status": new FormControl("", Validators.required),
     "description": new FormControl("", Validators.required),
@@ -99,6 +106,6 @@ export class AuthService {
 
   populateForm(pearson){
     this.myForm.patchValue(pearson);
-    console.log(pearson)
+    // console.log(pearson)
   }
 }

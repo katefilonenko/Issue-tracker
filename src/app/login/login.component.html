@@ -9,15 +9,15 @@
 
       <form class="form">
         <mat-form-field class="example-full-width">
-          <!-- <mat-label>Email</mat-label> -->
-          <input matInput type="email" [(ngModel)]="loginUserData.email" name="email" placeholder="Email"
+          <mat-label>Email</mat-label>
+          <input matInput type="email" [(ngModel)]="loginUserData.email" name="email" placeholder="Enter your email"
             #email="ngModel" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>
           <mat-icon matSuffix>account_circle</mat-icon>
           <mat-error>Invalid email address.</mat-error>
         </mat-form-field>
         <mat-form-field class="example-full-width">
-          <!-- <mat-label>Password</mat-label> -->
-          <input matInput type="password" [(ngModel)]="loginUserData.password" name="password" placeholder="Password"
+          <mat-label>Password</mat-label>
+          <input matInput type="password" [(ngModel)]="loginUserData.password" name="password" placeholder="Enter your password"
             pattern="[0-9]{10}" #password="ngModel" required password>
           <mat-icon matSuffix>vpn_key</mat-icon>
           <mat-error>Password must contain 10 numbers.</mat-error>
@@ -25,8 +25,9 @@
       </form>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-button color="primary" type="button" [disabled]="email.invalid || password.invalid"
-        (click)="loginUser()">Login</button>
+      <button mat-flat-button color="primary" type="button" [disabled]="email.invalid || password.invalid"
+        (click)="loginUser()">Login
+      </button>
     </mat-card-actions>
   </mat-card>
 </div>

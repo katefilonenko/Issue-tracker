@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { People } from '../interfaces/people';
-import { PeopleService } from '../services/people.service';
 import { Chart } from 'angular-highcharts';
 import { LoaderService } from '../loader/loader.service';
 import { AuthService } from '../services/auth.service';
@@ -15,7 +13,6 @@ export class StatComponent implements OnInit {
   people2: any;
 
   constructor(
-    private peopleService: PeopleService,
     public loaderService: LoaderService,
     private authService: AuthService
   ) { }
@@ -31,7 +28,7 @@ export class StatComponent implements OnInit {
       this.people2 = people;
       // console.log(this.people2);
       this.lengthOfSecondArr = this.people2.length;
-      console.log(this.lengthOfSecondArr);
+      // console.log(this.lengthOfSecondArr);
       // this.newArrForStat();
       this.statistics();
       this.usersLastMonth();
@@ -90,9 +87,9 @@ export class StatComponent implements OnInit {
         // console.log(result3);
       }
     });
-    console.log(this.result1);
-    console.log(this.result2);
-    console.log(this.result3);
+    // console.log(this.result1);
+    // console.log(this.result2);
+    // console.log(this.result3);
     this.chartFunk();
     // this.chart1Funk();
   }
@@ -156,7 +153,7 @@ export class StatComponent implements OnInit {
         type: 'column'
       },
       title: {
-        text: 'Quantity of requests'
+        text: 'Quantity of issues'
       },
       xAxis: {
         categories: ['Issues'],
@@ -212,11 +209,11 @@ export class StatComponent implements OnInit {
         type: 'area'
       },
       title: {
-        text: 'Quantity of users in the last month'
+        text: 'Quantity of issues in the last month'
       },
       xAxis: {
         categories: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', 
-        '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'],
+        '21', '22', '23', '24', '25', '26', '27', '28'],
         tickmarkPlacement: 'on',
         // title: {
         //     enabled: false
@@ -249,7 +246,7 @@ export class StatComponent implements OnInit {
       },
       series: [{
         type: 'area',
-        name: 'Users',
+        // name: 'Users',
         data: [this.u1, this.u2, this.u3, this.u4, this.u5, this.u6, this.u7, this.u8, this.u9, this.u10, this.u11, this.u12,this.u13, this.u14, this.u15, this.u16,
         this.u17, this.u18, this.u19, this.u20, this.u21, this.u22, this.u23, this.u24, this.u25, this.u26, this.u27, this.u28, this.u29, this.u30, this.u31],
         color: '#EDDBE6'

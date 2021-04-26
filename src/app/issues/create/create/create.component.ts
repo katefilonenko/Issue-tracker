@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatDialogConfig } from '@angular/material/dialog';
-import { PeopleService } from '../../../services/people.service';
 import { People } from '../../../interfaces/people';
 import { Location_ } from '../../../interfaces/location';
 import { ToastrService } from 'ngx-toastr';
@@ -67,10 +66,15 @@ export class CreateComponent implements OnInit {
     {id: 4, value: 'Critical'}
   ]
 
+  types = [
+    {id: 1, value: 'Bug'},
+    {id: 1, value: 'Story'},
+    {id: 1, value: 'Task'}
+  ]
+
   minDate = new Date();
 
   constructor(
-    public peopleService: PeopleService,
     public dialogRef: MatDialogRef<CreateComponent>,
     private toastr: ToastrService,
     private dialog: MatDialog,
@@ -102,6 +106,7 @@ export class CreateComponent implements OnInit {
   onClose() {
     this.dialogRef.close();
   }
+
 
   checkelements=[];
   allnames = [];
@@ -159,6 +164,7 @@ export class CreateComponent implements OnInit {
   searchEmail: string;
   searchLocation: string;
   searchHireDate: string;
+  searchType: string;
   searchSeverity: string;
   searchSatus: string;
   searchDescription: string;
@@ -250,39 +256,17 @@ export class CreateComponent implements OnInit {
     })
   }
 
-  addPearson(name: string, username: string, email: string, location: string,
-    hireDate: Date, severity: string, status: string, description: string, comment: string){
-    this.authService.addPearson({name, username, email, location,
-    hireDate, severity, status,description, comment} as People)
-    .subscribe(pearson => {
-      this.onClose();
-      this.createSuccess();
-    }, err => {
-      this.createError();
-    });
-  }
-
-  addPearsonBig(name: string, username: string, email: string, location: string,
-    hireDate: Date, severity: string, status: string, description: string, comment: string, locname:string) {
-
-    this.locationsService.addLocation({ locname } as Location_)
-      .subscribe(t => {
-        this.locationSuccess();
-      }, err => {
-        this.locationdError();
-      });
-
-    this.authService.addPearson({
-      name, username, email, location,
-      hireDate, severity, status, description, comment
-    } as People)
-      .subscribe(pearson => {
-        this.onClose();
-        this.createSuccess();
-      }, err => {
-        this.createError();
-      });
-  }
+  // addPearson(name: string, username: string, email: string, location: string,
+  //   hireDate: Date, type: string, severity: string, status: string, description: string, comment: string){
+  //   this.authService.addPearson({name, username, email, location,
+  //   hireDate, type, severity, status, description, comment} as People)
+  //   .subscribe(pearson => {
+  //     this.onClose();
+  //     this.createSuccess();
+  //   }, err => {
+  //     this.createError();
+  //   });
+  // }
 
 
 }

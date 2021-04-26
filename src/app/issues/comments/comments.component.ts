@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { People } from 'src/app/interfaces/people';
-import { PeopleService } from '../../services/people.service';
 
 @Component({
   selector: 'app-comments',
@@ -25,8 +24,7 @@ export class CommentsComponent implements OnInit {
   // }
 
   constructor(
-    public dialogRef: MatDialogRef<CommentsComponent>,
-    public peopleService: PeopleService
+    public dialogRef: MatDialogRef<CommentsComponent>
   ) { }
 
   ngOnInit(): void {
@@ -40,12 +38,12 @@ export class CommentsComponent implements OnInit {
   @Input() pearson: People;
 
   getPearson(){
-    const id = 1;
-    this.peopleService.getPearson(id)
-    .subscribe(pearson => {
-      this.pearson = pearson;
-      console.log(pearson)
-    })
+    // const id = 1;
+    // this.peopleService.getPearson(id)
+    // .subscribe(pearson => {
+    //   this.pearson = pearson;
+    //   console.log(pearson)
+    // })
   }
 
   saveComment() {

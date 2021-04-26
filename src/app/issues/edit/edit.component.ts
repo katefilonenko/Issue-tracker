@@ -3,7 +3,6 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { People } from 'src/app/interfaces/people';
-import { PeopleService } from 'src/app/services/people.service';
 import { LocationsService } from 'src/app/services/locations.service';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
@@ -63,10 +62,15 @@ export class EditComponent implements OnInit {
     {id: 4, value: 'Critical'}
   ]
 
+  types = [
+    {id: 1, value: 'Bug'},
+    {id: 1, value: 'Story'},
+    {id: 1, value: 'Task'}
+  ]
+
   constructor(
     public dialogRef: MatDialogRef<EditComponent>,
     private toastr: ToastrService,
-    public peopleService: PeopleService,
     private route: ActivatedRoute,
     @Inject(MAT_DIALOG_DATA) public data: People,
     public authService: AuthService,
@@ -172,6 +176,7 @@ export class EditComponent implements OnInit {
     email,
     location,
     hireDate, 
+    type,
     severity,
     status,
     description,
@@ -182,6 +187,7 @@ export class EditComponent implements OnInit {
       email,
       location,
       hireDate, 
+      type,
       severity,
       status,
       description,

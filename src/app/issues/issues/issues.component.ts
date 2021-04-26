@@ -5,9 +5,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDialogConfig } from '@angular/material/dialog';
 import { People } from '../../interfaces/people';
-import { PeopleService} from '../../services/people.service';
 import { MatButtonToggle } from '@angular/material/button-toggle';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { merge, Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { CreateComponent } from '../create/create/create.component';
@@ -47,6 +46,7 @@ export class IssuesComponent implements OnInit {
     'email', 
     'location', 
     'hireDate', 
+    'type',
     'severity', 
     'status', 
     'description', 
@@ -56,7 +56,6 @@ export class IssuesComponent implements OnInit {
   dataSource = new MatTableDataSource<People> (this.people);
 
   constructor(
-    private peopleService: PeopleService,
     private toastr: ToastrService,
     private dialog: MatDialog,
     private dialogService: DialogService,
@@ -86,6 +85,7 @@ export class IssuesComponent implements OnInit {
     email: new FormControl(true),
     location: new FormControl(true),
     hireDate: new FormControl(true),
+    type: new FormControl(true), 
     severity: new FormControl(true),
     status: new FormControl(true),
     description: new FormControl(true),
@@ -98,6 +98,7 @@ export class IssuesComponent implements OnInit {
   email = this.form.get('email');
   location = this.form.get('location');
   hireDate = this.form.get('hireDate');
+  type = this.form.get('type');
   severity = this.form.get('severity');
   status = this.form.get('status');
   description = this.form.get('description');
@@ -112,6 +113,7 @@ export class IssuesComponent implements OnInit {
     { def: 'email', label: 'Email', hide: this.email.value},
     { def: 'location', label: 'Location', hide: this.location.value},
     { def: 'hireDate', label: 'Created Date', hide: this.hireDate.value},
+    { def: 'type', label: 'Type', hide: this.type.value},
     { def: 'severity', label: 'Severity', hide: this.severity.value},
     { def: 'status', label: 'Status', hide: this.status.value},
     { def: 'description', label: 'Description', hide: this.description.value},
@@ -133,22 +135,24 @@ export class IssuesComponent implements OnInit {
     let o3:Observable<boolean> = this.email.valueChanges;
     let o4:Observable<boolean> = this.location.valueChanges;
     let o5:Observable<boolean> = this.hireDate.valueChanges;
-    let o6:Observable<boolean> = this.severity.valueChanges;
-    let o7:Observable<boolean> = this.status.valueChanges;
-    let o8:Observable<boolean> = this.description.valueChanges;
-    let o9:Observable<boolean> = this.comment.valueChanges;
+    let o6:Observable<boolean> = this.type.valueChanges;
+    let o7:Observable<boolean> = this.severity.valueChanges;
+    let o8:Observable<boolean> = this.status.valueChanges;
+    let o9:Observable<boolean> = this.description.valueChanges;
+    let o10:Observable<boolean> = this.comment.valueChanges;
     // let o10:Observable<boolean> = this.actions.valueChanges;
  
-    merge(o1, o2, o3, o4, o5, o6, o7, o8, o9).subscribe(v => {
+    merge(o1, o2, o3, o4, o5, o6, o7, o8, o9, o10).subscribe(v => {
       this.columnDefinitions[0].hide = this.name.value;
       this.columnDefinitions[1].hide = this.username.value;  
       this.columnDefinitions[2].hide = this.email.value;
       this.columnDefinitions[3].hide = this.location.value;  
       this.columnDefinitions[4].hide = this.hireDate.value;
-      this.columnDefinitions[5].hide = this.severity.value;  
-      this.columnDefinitions[6].hide = this.status.value;
-      this.columnDefinitions[7].hide = this.description.value;  
-      this.columnDefinitions[8].hide = this.comment.value;  
+      this.columnDefinitions[5].hide = this.type.value;
+      this.columnDefinitions[6].hide = this.severity.value;  
+      this.columnDefinitions[7].hide = this.status.value;
+      this.columnDefinitions[8].hide = this.description.value;  
+      this.columnDefinitions[9].hide = this.comment.value;  
       // this.columnDefinitions[9].hide = this.actions.value;  
       // console.log(this.columnDefinitions);
     });
@@ -182,11 +186,38 @@ export class IssuesComponent implements OnInit {
     .subscribe(users => this.users = users);
   }
 
+  editSuccess() {
+    this.toastr.success('Edited', 'Success');
+  }
+
+  editError(){
+    this.toastr.error('Not Edited', 'Major Error');
+  }
+
+  // myFormComment: FormGroup = new FormGroup({
+  //   "comment": new FormControl("")
+  // });
+
+  // populateForm(comment){
+  //   this.myFormComment.patchValue(comment);
+  //   console.log(comment)
+  // }
+
+  newComment:any;
   pearson:any;
-  onFocusOutEvent(event: any){
+  onFocusOutEvent(event: any, pearson, comment){
+    // this.populateForm(comment);
     console.log(event.target.value);
-    this.peopleService.updatePearson(this.pearson)
-    .subscribe(()=>this.getAllInfo())
+    console.log(pearson);
+    this.authService.updateComment(pearson._id, comment)
+    .subscribe( pearson => {
+        // console.log(comment)
+        // this.editSuccess();
+        // this.getAllInfo();
+      }, err => {
+        this.editError();
+      }
+    )
   }
 
   delete(pearson){
@@ -208,14 +239,15 @@ export class IssuesComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = "550px";
-    dialogConfig.height = "550px";
+    dialogConfig.width = "500px";
+    dialogConfig.height = "530px";
     this.dialog.open(CreateComponent, dialogConfig);
     this.dialog.afterAllClosed.subscribe(res => {
       this.getAllInfo();
     })
   }
 
+  title: string = "Pastebin Application";
 
   onEdit(pearson){
     this.authService.populateForm(pearson);
@@ -223,12 +255,12 @@ export class IssuesComponent implements OnInit {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = "500px";
-    dialogConfig.height = "500px";
+    dialogConfig.height = "530px";
     this.authService.getPearson(pearson._id)
     .subscribe(pearson => {
       this.pearson = pearson;
       dialogConfig.data = pearson;
-      console.log(pearson);
+      // console.log(pearson);
       if(this.pearson.status == 'Done'){
         console.log('cant open')
       } else {
